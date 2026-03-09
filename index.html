@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <script>
+        async function calc(op) {
+            const a = document.getElementById("first").value;
+            const b = document.getElementById("second").value;
+
+            // const res = await fetch(`http://localhost:3002/${op}/${a}/${b}`);
+            const res = await fetch(`http://localhost:3002/${op}`, {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    a: a,
+                    b: b,
+                })
+            });
+            const json = await res.json();
+
+            document.getElementById("response").innerHTML = json.ans;
+        }
+    </script>
+</head>
+
+<body>
+    <input id="first" type="text" placeholder="First Number">
+    <input id="second" type="text" placeholder="Second NUmber">
+
+    <button onclick="calc('sum')">Add</button>
+    <button onclick="calc('sub')">Sub</button>
+    <button onclick="calc('mul')">Mul</button>
+    <button onclick="calc('div')">Div</button>
+
+    <div id="response"></div>
+</body>
+
+</html>
